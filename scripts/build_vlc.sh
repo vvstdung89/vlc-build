@@ -5,7 +5,7 @@ vlc_url=http://download.videolan.org/pub/videolan/vlc/${VLC_VERSION}/vlc-${VLC_V
 
 echo "Start script. "
 
-if ( "$1" == "heroku"); then
+if [ "$1" == "heroku" ]; then
 	ln -s /app/.apt/usr/bin/luac5.2 /app/.apt/usr/bin/luac
 	cp /usr/include/xcb/xcb.h /app/.apt/usr/include/xcb/.
 	cp /usr/include/xcb/xproto.h /app/.apt/usr/include/xcb/.
@@ -52,7 +52,7 @@ echo "Compile vlc"
 		--prefix=$prefix 
 	sudo make install
 
-	if ( "$1" != "heroku"); then
+	if [ "$1" != "heroku" ]; then
 		cd /tmp
 		tar -zcvf vlc.tar.gz /tmp/vlc
 	fi
