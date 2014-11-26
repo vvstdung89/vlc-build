@@ -15,7 +15,7 @@ if [ "$1" == "heroku" ]; then
 	export "CFLAGS_lua=-I/app/.apt/usr/include/lua5.2 -I/app/.apt/usr/include/x86_64-linux-gnu"
 	export "LUA_CFLAGS=-I/app/.apt/usr/include/lua5.2 -I/app/.apt/usr/include/x86_64-linux-gnu"
 	cp  /app/.apt/usr/include/x86_64-linux-gnu/lua5.2-deb-multiarch.h /app/.apt/usr/include/lua5.2/.
-	prefix = "/tmp/vlc";
+	prefix="/tmp/vlc"
 	( cd /tmp ; python -m SimpleHTTPServer $PORT & )
 else
 	cat Aptfile | xargs sudo apt-get install -y
