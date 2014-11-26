@@ -49,7 +49,7 @@ echo "Compile vlc"
 		--disable-mad \
 		--disable-swscale \
 		--disable-a52 \
-		--prefix=$prefix 
+		--prefix=${prefix} 
 	
 
 	if [ "$1" != "heroku" ]; then
