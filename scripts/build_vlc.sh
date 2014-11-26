@@ -58,10 +58,11 @@ echo "Compile vlc"
 		tar -zcvf vlc.tar.gz /tmp/vlc
 	else
 		sudo make install
+		ldconfig
 	fi
 )
 
-ldconfig
+
 
 while true
 do
