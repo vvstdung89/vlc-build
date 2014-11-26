@@ -5,9 +5,7 @@ vlc_url=http://download.videolan.org/pub/videolan/vlc/${VLC_VERSION}/vlc-${VLC_V
 
 echo "Start script. "
 
-
-
-if ( $1 == 'heroku'); then
+if ( "$1" == "heroku"); then
 	ln -s /app/.apt/usr/bin/luac5.2 /app/.apt/usr/bin/luac
 	cp /usr/include/xcb/xcb.h /app/.apt/usr/include/xcb/.
 	cp /usr/include/xcb/xproto.h /app/.apt/usr/include/xcb/.
@@ -18,13 +16,12 @@ if ( $1 == 'heroku'); then
 	export LUA_CFLAGS=-I/app/.apt/usr/include/lua5.2 -I/app/.apt/usr/include/x86_64-linux-gnu
 	cp  /app/.apt/usr/include/x86_64-linux-gnu/lua5.2-deb-multiarch.h /app/.apt/usr/include/lua5.2/.
 	prefix = "/tmp/vlc";
+	( cd /tmp ; python -m SimpleHTTPServer $PORT & )
 else
-	cat Aptfile | xargs sudo apt-get install
+	cat Aptfile | xargs sudo apt-get install -y
+	sudo apt-get -y install libgcrypt20-dev 
+	prefix="/usr/local"
 fi
-
-prefix="/usr/local"
-
-( cd /tmp ; python -m SimpleHTTPServer $PORT & )
 
 temp_dir=$(mktemp -d /tmp/vlc.XXXXXXXXXX)
 cur_dir=`pwd`
@@ -55,9 +52,13 @@ echo "Compile vlc"
 		--prefix=$prefix 
 	sudo make install
 
-	cd /tmp
-	tar -zcvf vlc.tar.gz /tmp/vlc
+	if ( "$1" != "heroku"); then
+		cd /tmp
+		tar -zcvf vlc.tar.gz /tmp/vlc
+	fi
 )
+
+ldconfig
 
 while true
 do
