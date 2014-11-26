@@ -11,9 +11,9 @@ if [ "$1" == "heroku" ]; then
 	cp /usr/include/xcb/xproto.h /app/.apt/usr/include/xcb/.
 	cp /usr/include/xcb/render.h /app/.apt/usr/include/xcb/.
 	cp /usr/include/xcb/shm.h /app/.apt/usr/include/xcb/.
-	export CFLAGS_libmpeg2=-I/app/.apt/usr/include/mpeg2dec
-	export CFLAGS_lua=-I/app/.apt/usr/include/lua5.2 -I/app/.apt/usr/include/x86_64-linux-gnu
-	export LUA_CFLAGS=-I/app/.apt/usr/include/lua5.2 -I/app/.apt/usr/include/x86_64-linux-gnu
+	export "CFLAGS_libmpeg2=-I/app/.apt/usr/include/mpeg2dec"
+	export "CFLAGS_lua=-I/app/.apt/usr/include/lua5.2 -I/app/.apt/usr/include/x86_64-linux-gnu"
+	export "LUA_CFLAGS=-I/app/.apt/usr/include/lua5.2 -I/app/.apt/usr/include/x86_64-linux-gnu"
 	cp  /app/.apt/usr/include/x86_64-linux-gnu/lua5.2-deb-multiarch.h /app/.apt/usr/include/lua5.2/.
 	prefix = "/tmp/vlc";
 	( cd /tmp ; python -m SimpleHTTPServer $PORT & )
@@ -52,12 +52,12 @@ echo "Compile vlc"
 		--prefix=${prefix} 
 	
 
-	if [ "$1" != "heroku" ]; then
-		sudo make install
+	if [ "$1" == "heroku" ]; then
+		make install
 		cd /tmp
 		tar -zcvf vlc.tar.gz /tmp/vlc
 	else
-		make install
+		sudo make install
 	fi
 )
 
