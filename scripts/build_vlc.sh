@@ -50,11 +50,14 @@ echo "Compile vlc"
 		--disable-swscale \
 		--disable-a52 \
 		--prefix=$prefix 
-	sudo make install
+	
 
 	if [ "$1" != "heroku" ]; then
+		sudo make install
 		cd /tmp
 		tar -zcvf vlc.tar.gz /tmp/vlc
+	else
+		make install
 	fi
 )
 
